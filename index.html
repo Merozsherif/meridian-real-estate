@@ -1,0 +1,1217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MERIDIAN — Real Estate Development</title>
+<meta name="description" content="MERIDIAN Developments — waterfront residences, villa compounds and business districts, charted for the way you actually live.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;0,9..144,900;1,9..144,500;1,9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============ TOKENS ============ */
+:root{
+  --emerald-950:#0A2825;
+  --emerald-900:#0E3733;
+  --emerald-800:#134A44;
+  --emerald-700:#1B5C54;
+  --gold:#C6A15B;
+  --gold-light:#E3C88B;
+  --coral:#D9694A;
+  --ivory:#FBF8F3;
+  --ivory-dim:#F3EEE3;
+  --ink:#16211D;
+  --stone:#5E685F;
+  --line:#E4DFD3;
+  --line-dark:rgba(230,212,166,0.18);
+
+  --font-display:'Fraunces', serif;
+  --font-body:'Inter', sans-serif;
+  --font-mono:'IBM Plex Mono', monospace;
+
+  --radius-s:4px;
+  --radius-m:10px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  margin:0;
+  font-family:var(--font-body);
+  color:var(--ink);
+  background:var(--ivory);
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img{max-width:100%;display:block;}
+a{color:inherit;text-decoration:none;}
+button{font-family:inherit;cursor:pointer;}
+h1,h2,h3,h4{font-family:var(--font-display);margin:0;font-weight:600;letter-spacing:-0.01em;}
+p{margin:0;line-height:1.65;}
+:focus-visible{outline:2px solid var(--gold);outline-offset:3px;}
+.container{max-width:1240px;margin:0 auto;padding:0 32px;}
+.eyebrow{
+  font-family:var(--font-mono);
+  font-size:12px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--gold);
+  display:flex;
+  align-items:center;
+  gap:10px;
+}
+.eyebrow::before{content:"";width:22px;height:1px;background:var(--gold);display:inline-block;}
+.eyebrow.dark{color:var(--emerald-700);}
+.eyebrow.dark::before{background:var(--emerald-700);}
+
+/* meridian line motif — recurring divider */
+.meridian-rule{
+  position:relative;
+  height:1px;
+  background:var(--line);
+  margin:0 auto;
+  width:100%;
+}
+.meridian-rule::before{
+  content:"";
+  position:absolute;
+  left:50%;top:-3px;
+  width:7px;height:7px;
+  border-radius:50%;
+  background:var(--gold);
+  transform:translateX(-50%);
+}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+
+/* ============ REVEAL ON SCROLL ============ */
+.reveal{opacity:0; transform:translateY(24px); transition:opacity .7s var(--ease), transform .7s var(--ease);}
+.reveal.in{opacity:1; transform:translateY(0);}
+
+/* ============ NAV ============ */
+.nav{
+  position:fixed; top:0; left:0; right:0; z-index:900;
+  display:flex; align-items:center; justify-content:space-between;
+  padding:22px 32px;
+  transition:background .35s var(--ease), padding .35s var(--ease), box-shadow .35s var(--ease);
+}
+.nav.scrolled{
+  background:rgba(10,40,37,0.92);
+  backdrop-filter:blur(10px);
+  padding:14px 32px;
+  box-shadow:0 8px 30px rgba(0,0,0,0.18);
+}
+.nav-logo{
+  display:flex; align-items:center; gap:10px;
+  font-family:var(--font-display); font-weight:700; font-size:21px;
+  color:var(--ivory); letter-spacing:0.01em;
+}
+.nav-logo svg{flex-shrink:0;}
+.nav-links{display:flex; gap:36px; list-style:none; margin:0; padding:0;}
+.nav-links a{
+  color:var(--ivory); font-size:14px; font-weight:500; opacity:0.82;
+  position:relative; padding:4px 0;
+  transition:opacity .25s;
+}
+.nav-links a::after{
+  content:""; position:absolute; left:0; bottom:0; width:0; height:1px;
+  background:var(--gold); transition:width .3s var(--ease);
+}
+.nav-links a:hover{opacity:1;}
+.nav-links a:hover::after{width:100%;}
+.nav-cta{
+  display:inline-flex; align-items:center; gap:8px;
+  background:var(--gold); color:var(--emerald-950);
+  font-size:13.5px; font-weight:600;
+  padding:11px 20px; border-radius:2px; border:none;
+  transition:background .25s, transform .25s;
+}
+.nav-cta:hover{background:var(--gold-light); transform:translateY(-1px);}
+.nav-toggle{
+  display:none; background:none; border:none; padding:6px;
+  flex-direction:column; gap:5px;
+}
+.nav-toggle span{width:24px; height:1.5px; background:var(--ivory); display:block; transition:transform .3s, opacity .3s;}
+.nav-toggle.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg);}
+.nav-toggle.open span:nth-child(2){opacity:0;}
+.nav-toggle.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg);}
+
+.mobile-menu{
+  position:fixed; inset:0; z-index:850;
+  background:var(--emerald-950);
+  display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px;
+  transform:translateY(-100%); transition:transform .45s var(--ease);
+}
+.mobile-menu.open{transform:translateY(0);}
+.mobile-menu a{color:var(--ivory); font-family:var(--font-display); font-size:28px;}
+.mobile-menu .nav-cta{margin-top:10px;}
+
+/* ============ HERO ============ */
+.hero{
+  position:relative;
+  min-height:100vh;
+  background:linear-gradient(165deg, var(--emerald-950) 0%, var(--emerald-900) 55%, var(--emerald-800) 100%);
+  color:var(--ivory);
+  display:flex; align-items:center;
+  padding:140px 0 100px;
+  overflow:hidden;
+}
+.hero-grid-lines{
+  position:absolute; inset:0; pointer-events:none; opacity:0.35;
+}
+.hero-content{position:relative; z-index:2; display:grid; grid-template-columns:1.15fr 0.85fr; gap:60px; align-items:center;}
+.hero-copy h1{
+  font-size:clamp(42px,5.4vw,74px);
+  line-height:1.04;
+  font-weight:600;
+  letter-spacing:-0.015em;
+}
+.hero-copy h1 em{font-style:italic; font-weight:500; color:var(--gold-light);}
+.hero-copy .eyebrow{margin-bottom:22px;}
+.hero-copy p.lede{
+  margin-top:22px; max-width:480px; font-size:17px; color:rgba(251,248,243,0.72); line-height:1.7;
+}
+.hero-stats-inline{display:flex; gap:34px; margin-top:38px;}
+.hero-stats-inline div{border-left:1px solid var(--line-dark); padding-left:16px;}
+.hero-stats-inline .num{font-family:var(--font-display); font-size:26px; color:var(--gold-light); font-weight:600;}
+.hero-stats-inline .lbl{font-size:12px; color:rgba(251,248,243,0.55); margin-top:2px;}
+
+/* compass signature graphic */
+.compass-wrap{position:relative; display:flex; align-items:center; justify-content:center; height:100%;}
+.compass{width:100%; max-width:380px;}
+.compass .ring{transform-origin:200px 200px; animation:spin 60s linear infinite;}
+.compass .ring2{transform-origin:200px 200px; animation:spin 90s linear infinite reverse;}
+@keyframes spin{to{transform:rotate(360deg);}}
+
+/* search widget — signature functional element */
+.search-widget{
+  position:relative; z-index:3;
+  margin-top:56px;
+  background:rgba(251,248,243,0.06);
+  border:1px solid var(--line-dark);
+  backdrop-filter:blur(6px);
+  border-radius:2px;
+  padding:22px;
+  display:grid; grid-template-columns:1.2fr 1fr 1fr auto; gap:1px;
+  grid-column:1/-1;
+}
+.search-field{
+  padding:8px 18px;
+  border-right:1px solid var(--line-dark);
+  display:flex; flex-direction:column; gap:6px;
+}
+.search-field:last-of-type{border-right:none;}
+.search-field label{
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.1em; text-transform:uppercase;
+  color:var(--gold-light); opacity:0.85;
+}
+.search-field select{
+  background:transparent; border:none; color:var(--ivory); font-family:var(--font-body);
+  font-size:14.5px; font-weight:500; appearance:none; cursor:pointer;
+}
+.search-field select option{color:var(--ink);}
+.search-btn{
+  background:var(--gold); border:none; color:var(--emerald-950);
+  font-weight:700; font-size:14px; padding:0 30px;
+  display:flex; align-items:center; gap:8px; justify-self:stretch;
+  transition:background .25s;
+}
+.search-btn:hover{background:var(--gold-light);}
+
+/* ============ STATS BAR ============ */
+.stats-bar{
+  background:var(--ivory-dim);
+  border-bottom:1px solid var(--line);
+  padding:52px 0;
+}
+.stats-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:20px; text-align:center;}
+.stat .num{
+  font-family:var(--font-display); font-weight:700; font-size:clamp(30px,3.4vw,44px);
+  color:var(--emerald-900);
+}
+.stat .num::after{content:attr(data-suffix);}
+.stat .lbl{
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:0.08em; text-transform:uppercase;
+  color:var(--stone); margin-top:8px;
+}
+
+/* ============ SECTION GENERIC ============ */
+section{padding:110px 0;}
+.section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:56px; flex-wrap:wrap;}
+.section-head h2{font-size:clamp(30px,3.6vw,46px); max-width:600px; line-height:1.12; margin-top:16px;}
+.section-head .desc{max-width:340px; color:var(--stone); font-size:15px; padding-bottom:6px;}
+
+/* ============ PROJECT FILTERS ============ */
+.filters{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:44px;}
+.filter-btn{
+  background:none; border:1px solid var(--line);
+  padding:10px 20px; border-radius:2px;
+  font-size:13px; font-weight:500; color:var(--stone);
+  transition:all .25s;
+}
+.filter-btn.active, .filter-btn:hover{
+  background:var(--emerald-900); border-color:var(--emerald-900); color:var(--ivory);
+}
+
+/* ============ PROJECT GRID ============ */
+.project-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:28px;}
+.project-card{
+  background:#fff; border:1px solid var(--line); overflow:hidden;
+  cursor:pointer; transition:transform .4s var(--ease), box-shadow .4s var(--ease);
+  display:flex; flex-direction:column;
+}
+.project-card:hover{transform:translateY(-6px); box-shadow:0 24px 48px -20px rgba(14,55,51,0.25);}
+.project-media{
+  height:220px; position:relative; overflow:hidden;
+}
+.project-media .tag{
+  position:absolute; top:14px; left:14px; z-index:2;
+  background:rgba(10,40,37,0.85); color:var(--gold-light);
+  font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.08em; text-transform:uppercase;
+  padding:6px 12px;
+}
+.project-media .art{
+  position:absolute; inset:0;
+  transition:transform .6s var(--ease);
+}
+.project-card:hover .project-media .art{transform:scale(1.06);}
+.project-body{padding:24px; display:flex; flex-direction:column; gap:10px; flex:1;}
+.project-body .loc{
+  font-family:var(--font-mono); font-size:11px; color:var(--stone); letter-spacing:0.04em;
+  display:flex; align-items:center; gap:6px;
+}
+.project-body h3{font-size:22px; font-weight:600;}
+.project-body .desc{color:var(--stone); font-size:14px; line-height:1.6;}
+.project-foot{
+  display:flex; justify-content:space-between; align-items:center;
+  margin-top:auto; padding-top:16px; border-top:1px solid var(--line);
+}
+.project-foot .price{font-family:var(--font-mono); font-weight:500; font-size:14.5px; color:var(--emerald-900);}
+.project-foot .view{font-size:13px; font-weight:600; color:var(--coral); display:flex; align-items:center; gap:6px;}
+
+/* ============ MODAL ============ */
+.modal-overlay{
+  position:fixed; inset:0; background:rgba(10,25,23,0.72);
+  z-index:1000; display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transition:opacity .35s var(--ease);
+  padding:24px;
+}
+.modal-overlay.open{opacity:1; pointer-events:auto;}
+.modal{
+  background:var(--ivory); max-width:920px; width:100%; max-height:88vh; overflow-y:auto;
+  transform:translateY(30px) scale(0.98); transition:transform .4s var(--ease);
+  position:relative;
+}
+.modal-overlay.open .modal{transform:translateY(0) scale(1);}
+.modal-close{
+  position:absolute; top:18px; right:18px; z-index:5;
+  width:38px; height:38px; border-radius:50%; border:none;
+  background:rgba(10,40,37,0.85); color:var(--ivory); font-size:18px;
+  display:flex; align-items:center; justify-content:center;
+}
+.modal-hero{height:280px; position:relative;}
+.modal-body{padding:36px 40px 44px;}
+.modal-body .loc{font-family:var(--font-mono); font-size:12px; color:var(--stone);}
+.modal-body h3{font-size:32px; margin-top:10px;}
+.modal-body .lede{margin-top:14px; color:var(--stone); max-width:560px;}
+.modal-specs{
+  display:grid; grid-template-columns:repeat(4,1fr); gap:18px;
+  margin:30px 0; padding:22px 0; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+}
+.modal-specs .spec .num{font-family:var(--font-display); font-size:22px; font-weight:600; color:var(--emerald-900);}
+.modal-specs .spec .lbl{font-family:var(--font-mono); font-size:10.5px; text-transform:uppercase; color:var(--stone); margin-top:4px;}
+.modal-amenities{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:30px;}
+.modal-amenities span{
+  font-size:12.5px; padding:8px 14px; background:var(--ivory-dim); border:1px solid var(--line); color:var(--emerald-900); font-weight:500;
+}
+.modal-cta{display:flex; gap:14px; flex-wrap:wrap;}
+.btn-primary{
+  background:var(--emerald-900); color:var(--ivory); border:none; padding:14px 28px;
+  font-weight:600; font-size:14px; display:inline-flex; align-items:center; gap:8px;
+  transition:background .25s;
+}
+.btn-primary:hover{background:var(--emerald-800);}
+.btn-ghost{
+  background:none; border:1px solid var(--line); color:var(--emerald-900); padding:14px 28px;
+  font-weight:600; font-size:14px; transition:border-color .25s;
+}
+.btn-ghost:hover{border-color:var(--emerald-900);}
+
+/* ============ WHY / FEATURES ============ */
+.why-section{background:var(--emerald-950); color:var(--ivory);}
+.why-section .eyebrow{color:var(--gold-light);}
+.why-section .eyebrow::before{background:var(--gold-light);}
+.why-section .section-head .desc{color:rgba(251,248,243,0.6);}
+.feature-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line-dark); border:1px solid var(--line-dark);}
+.feature{background:var(--emerald-950); padding:34px 26px;}
+.feature .icon{margin-bottom:22px;}
+.feature h4{font-size:18px; margin-bottom:10px; font-weight:600;}
+.feature p{font-size:13.5px; color:rgba(251,248,243,0.6);}
+
+/* ============ PROCESS ============ */
+.process-list{display:flex; flex-direction:column;}
+.process-item{
+  display:grid; grid-template-columns:100px 1fr 1.3fr; gap:30px; align-items:center;
+  padding:34px 0; border-top:1px solid var(--line);
+}
+.process-item:last-child{border-bottom:1px solid var(--line);}
+.process-item .idx{font-family:var(--font-mono); font-size:13px; color:var(--gold); letter-spacing:0.05em;}
+.process-item h4{font-size:24px; font-weight:600;}
+.process-item p{color:var(--stone); font-size:14.5px; max-width:440px;}
+
+/* ============ TESTIMONIALS ============ */
+.testimonial-section{background:var(--ivory-dim);}
+.testimonial-wrap{max-width:760px; margin:0 auto; text-align:center; position:relative;}
+.testimonial-slide{display:none;}
+.testimonial-slide.active{display:block; animation:fadeIn .6s var(--ease);}
+@keyframes fadeIn{from{opacity:0; transform:translateY(10px);} to{opacity:1; transform:translateY(0);}}
+.testimonial-slide blockquote{
+  font-family:var(--font-display); font-size:clamp(20px,2.6vw,28px); font-weight:500; font-style:italic;
+  line-height:1.5; color:var(--emerald-950); margin:0;
+}
+.testimonial-slide .author{margin-top:26px; font-family:var(--font-mono); font-size:12.5px; color:var(--stone); letter-spacing:0.03em;}
+.testimonial-controls{display:flex; justify-content:center; align-items:center; gap:22px; margin-top:40px;}
+.t-dot{width:8px; height:8px; border-radius:50%; background:var(--line); border:none; padding:0; transition:background .25s, transform .25s;}
+.t-dot.active{background:var(--gold); transform:scale(1.3);}
+.t-arrow{
+  width:44px; height:44px; border-radius:50%; border:1px solid var(--line); background:#fff;
+  display:flex; align-items:center; justify-content:center; transition:border-color .25s, transform .2s;
+}
+.t-arrow:hover{border-color:var(--emerald-900); transform:scale(1.05);}
+
+/* ============ CONTACT ============ */
+.contact-section{background:linear-gradient(165deg, var(--emerald-950) 0%, var(--emerald-900) 100%); color:var(--ivory);}
+.contact-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:70px;}
+.contact-info h2{font-size:clamp(30px,3.4vw,44px); line-height:1.12; margin-top:16px;}
+.contact-info p.lede{margin-top:18px; color:rgba(251,248,243,0.65); max-width:400px;}
+.contact-detail{display:flex; gap:16px; margin-top:30px; align-items:flex-start;}
+.contact-detail .lbl{font-family:var(--font-mono); font-size:11px; color:var(--gold-light); text-transform:uppercase; letter-spacing:0.06em;}
+.contact-detail .val{font-size:15px; margin-top:4px;}
+.form-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+.form-field{display:flex; flex-direction:column; gap:8px; margin-bottom:18px;}
+.form-field.full{grid-column:1/-1;}
+.form-field label{font-family:var(--font-mono); font-size:11px; letter-spacing:0.06em; text-transform:uppercase; color:var(--gold-light);}
+.form-field input, .form-field select, .form-field textarea{
+  background:rgba(251,248,243,0.06); border:1px solid var(--line-dark); color:var(--ivory);
+  padding:13px 14px; font-family:var(--font-body); font-size:14.5px; border-radius:2px;
+  transition:border-color .25s;
+}
+.form-field select option{color:var(--ink);}
+.form-field input:focus, .form-field select:focus, .form-field textarea:focus{border-color:var(--gold);}
+.form-field textarea{resize:vertical; min-height:100px;}
+.form-error{font-size:12px; color:var(--coral); min-height:14px;}
+.form-submit{
+  background:var(--gold); border:none; color:var(--emerald-950); font-weight:700; font-size:14.5px;
+  padding:16px 32px; width:100%; transition:background .25s, transform .25s;
+  display:flex; align-items:center; justify-content:center; gap:10px;
+}
+.form-submit:hover{background:var(--gold-light);}
+.form-submit:disabled{opacity:0.6; cursor:default;}
+.form-success{
+  display:none; text-align:center; padding:40px 20px; border:1px dashed var(--line-dark);
+}
+.form-success.show{display:block; animation:fadeIn .5s var(--ease);}
+.form-success .check{margin:0 auto 18px;}
+.form-success h4{font-size:22px; margin-bottom:8px;}
+.form-success p{color:rgba(251,248,243,0.65); font-size:14px;}
+
+/* ============ FOOTER ============ */
+footer{background:var(--emerald-950); color:rgba(251,248,243,0.6); padding:64px 0 30px;}
+.footer-top{display:grid; grid-template-columns:1.4fr 1fr 1fr 1.2fr; gap:50px; padding-bottom:50px; border-bottom:1px solid var(--line-dark);}
+.footer-brand .nav-logo{margin-bottom:16px;}
+.footer-brand p{font-size:13.5px; max-width:280px; line-height:1.7;}
+.footer-col h5{
+  font-family:var(--font-mono); font-size:11px; text-transform:uppercase; letter-spacing:0.08em;
+  color:var(--gold-light); margin-bottom:18px;
+}
+.footer-col a{display:block; font-size:13.5px; margin-bottom:12px; color:rgba(251,248,243,0.6); transition:color .2s;}
+.footer-col a:hover{color:var(--ivory);}
+.newsletter{display:flex; gap:0; margin-top:6px;}
+.newsletter input{
+  flex:1; background:rgba(251,248,243,0.06); border:1px solid var(--line-dark); border-right:none;
+  padding:12px 14px; color:var(--ivory); font-size:13.5px;
+}
+.newsletter button{
+  background:var(--gold); border:none; padding:0 18px; color:var(--emerald-950); font-weight:700; font-size:13px;
+}
+.newsletter-msg{font-size:12px; color:var(--gold-light); margin-top:10px; min-height:14px;}
+.footer-bottom{display:flex; justify-content:space-between; align-items:center; padding-top:26px; font-size:12.5px; flex-wrap:wrap; gap:14px;}
+.footer-bottom .socials{display:flex; gap:16px;}
+
+/* ============ BACK TO TOP ============ */
+.to-top{
+  position:fixed; bottom:28px; right:28px; z-index:400;
+  width:46px; height:46px; border-radius:50%; border:none;
+  background:var(--emerald-900); color:var(--ivory);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none; transform:translateY(10px);
+  transition:opacity .3s, transform .3s;
+  box-shadow:0 10px 30px rgba(0,0,0,0.2);
+}
+.to-top.show{opacity:1; pointer-events:auto; transform:translateY(0);}
+
+/* ============ TOAST ============ */
+.toast{
+  position:fixed; top:24px; right:24px; z-index:1200;
+  background:var(--emerald-950); color:var(--ivory); border-left:3px solid var(--gold);
+  padding:16px 22px; font-size:13.5px; max-width:320px;
+  transform:translateX(120%); transition:transform .4s var(--ease);
+  box-shadow:0 14px 40px rgba(0,0,0,0.25);
+}
+.toast.show{transform:translateX(0);}
+
+/* ============ RESPONSIVE ============ */
+@media (max-width:980px){
+  .hero-content{grid-template-columns:1fr;}
+  .compass-wrap{display:none;}
+  .search-widget{grid-template-columns:1fr 1fr; row-gap:14px;}
+  .search-field{border-right:none; border-bottom:1px solid var(--line-dark); padding-bottom:14px;}
+  .search-btn{grid-column:1/-1; padding:14px;}
+  .stats-grid{grid-template-columns:repeat(2,1fr); row-gap:30px;}
+  .project-grid{grid-template-columns:repeat(2,1fr);}
+  .feature-grid{grid-template-columns:repeat(2,1fr);}
+  .contact-grid{grid-template-columns:1fr; gap:50px;}
+  .footer-top{grid-template-columns:1fr 1fr; row-gap:36px;}
+  .process-item{grid-template-columns:60px 1fr; row-gap:8px;}
+  .process-item p{grid-column:2/3;}
+}
+@media (max-width:680px){
+  .nav-links, .nav-cta.desktop-only{display:none;}
+  .nav-toggle{display:flex;}
+  .container{padding:0 22px;}
+  .hero{padding:120px 0 70px;}
+  .project-grid{grid-template-columns:1fr;}
+  .feature-grid{grid-template-columns:1fr;}
+  .form-grid{grid-template-columns:1fr;}
+  .footer-top{grid-template-columns:1fr;}
+  .modal-specs{grid-template-columns:repeat(2,1fr); row-gap:20px;}
+  .section-head{flex-direction:column; align-items:flex-start;}
+  .filters{overflow-x:auto; flex-wrap:nowrap; padding-bottom:6px;}
+  .stats-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav-logo">
+    <svg width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="13.5" stroke="#C6A15B" stroke-width="1"/><path d="M15 4 L18 15 L15 26 L12 15 Z" fill="#C6A15B"/></svg>
+    MERIDIAN
+  </a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#why">Why Us</a></li>
+    <li><a href="#process">Process</a></li>
+    <li><a href="#testimonials">Clients</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta desktop-only">Request a Consultation</a>
+  <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#projects" class="m-link">Projects</a>
+  <a href="#why" class="m-link">Why Us</a>
+  <a href="#process" class="m-link">Process</a>
+  <a href="#testimonials" class="m-link">Clients</a>
+  <a href="#contact" class="m-link">Contact</a>
+  <a href="#contact" class="nav-cta m-link">Request a Consultation</a>
+</div>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <svg class="hero-grid-lines" width="100%" height="100%" preserveAspectRatio="none">
+    <defs>
+      <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
+        <path d="M 60 0 L 0 0 0 60" fill="none" stroke="#E3C88B" stroke-width="0.4" opacity="0.5"/>
+      </pattern>
+    </defs>
+    <rect width="100%" height="100%" fill="url(#grid)"/>
+  </svg>
+
+  <div class="container">
+    <div class="hero-content">
+      <div class="hero-copy reveal in">
+        <div class="eyebrow">Meridian Developments — Est. 2011</div>
+        <h1>Every address<br>has a <em>coordinate.</em><br>We chart yours.</h1>
+        <p class="lede">Waterfront residences, villa compounds and business districts — designed with surveyor's precision and delivered on the date we promise. Explore live projects across four cities.</p>
+        <div class="hero-stats-inline">
+          <div><div class="num">42</div><div class="lbl">Projects Delivered</div></div>
+          <div><div class="num">1.2M</div><div class="lbl">Sq. Meters Built</div></div>
+          <div><div class="num">98%</div><div class="lbl">On-Time Handover</div></div>
+        </div>
+      </div>
+
+      <div class="compass-wrap reveal in">
+        <svg class="compass" viewBox="0 0 400 400" fill="none">
+          <g class="ring">
+            <circle cx="200" cy="200" r="170" stroke="#E3C88B" stroke-width="0.6" opacity="0.5"/>
+            <circle cx="200" cy="200" r="170" stroke="#E3C88B" stroke-width="0.6" opacity="0.5" stroke-dasharray="2 8"/>
+          </g>
+          <g class="ring2">
+            <circle cx="200" cy="200" r="130" stroke="#C6A15B" stroke-width="0.8" opacity="0.7"/>
+          </g>
+          <circle cx="200" cy="200" r="90" stroke="#FBF8F3" stroke-width="0.6" opacity="0.3"/>
+          <path d="M200 40 L212 200 L200 360 L188 200 Z" fill="#C6A15B" opacity="0.85"/>
+          <path d="M40 200 L200 212 L360 200 L200 188 Z" fill="#E3C88B" opacity="0.5"/>
+          <circle cx="200" cy="200" r="6" fill="#FBF8F3"/>
+          <text x="200" y="28" text-anchor="middle" fill="#E3C88B" font-family="IBM Plex Mono" font-size="12">N</text>
+          <text x="200" y="382" text-anchor="middle" fill="#E3C88B" font-family="IBM Plex Mono" font-size="12">S</text>
+          <text x="20" y="205" text-anchor="middle" fill="#E3C88B" font-family="IBM Plex Mono" font-size="12">W</text>
+          <text x="380" y="205" text-anchor="middle" fill="#E3C88B" font-family="IBM Plex Mono" font-size="12">E</text>
+        </svg>
+      </div>
+
+      <!-- functional search widget -->
+      <form class="search-widget reveal in" id="searchForm">
+        <div class="search-field">
+          <label for="fType">Property Type</label>
+          <select id="fType">
+            <option value="all">All Types</option>
+            <option value="residential">Residential</option>
+            <option value="villa">Villas</option>
+            <option value="commercial">Commercial</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label for="fCity">Location</label>
+          <select id="fCity">
+            <option value="all">All Cities</option>
+            <option value="Cairo">Cairo</option>
+            <option value="North Coast">North Coast</option>
+            <option value="Sokhna">Sokhna</option>
+            <option value="New Capital">New Capital</option>
+          </select>
+        </div>
+        <div class="search-field">
+          <label for="fBudget">Budget</label>
+          <select id="fBudget">
+            <option value="all">Any Budget</option>
+            <option value="low">Under 6M EGP</option>
+            <option value="mid">6M – 15M EGP</option>
+            <option value="high">15M+ EGP</option>
+          </select>
+        </div>
+        <button type="submit" class="search-btn">
+          Search Properties
+          <svg width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="#0A2825" stroke-width="1.6"/></svg>
+        </button>
+      </form>
+    </div>
+  </div>
+</header>
+
+<!-- ============ STATS BAR ============ -->
+<section class="stats-bar" style="padding-top:0;">
+  <div class="container">
+    <div class="stats-grid">
+      <div class="stat reveal"><div class="num" data-count="42" data-suffix="">0</div><div class="lbl">Projects Delivered</div></div>
+      <div class="stat reveal"><div class="num" data-count="4" data-suffix="">0</div><div class="lbl">Active Cities</div></div>
+      <div class="stat reveal"><div class="num" data-count="1200000" data-suffix="">0</div><div class="lbl">Sq. Meters Built</div></div>
+      <div class="stat reveal"><div class="num" data-count="14" data-suffix=" yrs">0</div><div class="lbl">In Development</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROJECTS ============ -->
+<section id="projects">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow dark">Live Inventory</div>
+        <h2>Six projects, four cities, one standard of delivery.</h2>
+      </div>
+      <p class="desc">Every unit shown below is drawn from our current release. Filter by type or open a project for full specs, plans and pricing.</p>
+    </div>
+
+    <div class="filters reveal">
+      <button class="filter-btn active" data-filter="all">All Projects</button>
+      <button class="filter-btn" data-filter="residential">Residential</button>
+      <button class="filter-btn" data-filter="villa">Villas</button>
+      <button class="filter-btn" data-filter="commercial">Commercial</button>
+    </div>
+
+    <div class="project-grid" id="projectGrid"></div>
+  </div>
+</section>
+
+<!-- ============ WHY US ============ -->
+<section class="why-section" id="why">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow">Why Meridian</div>
+        <h2>Built the way engineers would build for their own family.</h2>
+      </div>
+      <p class="desc">Four commitments that shape every project we release, from the first survey to the final handover key.</p>
+    </div>
+    <div class="feature-grid">
+      <div class="feature reveal">
+        <div class="icon"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 2 4 8v9c0 7 5 10 11 11 6-1 11-4 11-11V8L15 2Z" stroke="#C6A15B" stroke-width="1.3"/></svg></div>
+        <h4>Structural Transparency</h4>
+        <p>Third-party inspection reports published quarterly — not on request, by default.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="icon"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="12" stroke="#C6A15B" stroke-width="1.3"/><path d="M15 8v7l5 3" stroke="#C6A15B" stroke-width="1.3"/></svg></div>
+        <h4>Fixed Delivery Dates</h4>
+        <p>98% of units handed over on the exact date printed in the contract, penalty-backed.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="icon"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M6 15h18M15 6v18" stroke="#C6A15B" stroke-width="1.3"/><circle cx="15" cy="15" r="12" stroke="#C6A15B" stroke-width="1.3"/></svg></div>
+        <h4>Flexible Payment Plans</h4>
+        <p>Up to 8 years, structured around your cash flow, not a template spreadsheet.</p>
+      </div>
+      <div class="feature reveal">
+        <div class="icon"><svg width="30" height="30" viewBox="0 0 30 30" fill="none"><path d="M15 27s10-6.5 10-14.5A7.5 7.5 0 0 0 15 6a7.5 7.5 0 0 0-10 6.5C5 20.5 15 27 15 27Z" stroke="#C6A15B" stroke-width="1.3"/></svg></div>
+        <h4>In-House Facility Management</h4>
+        <p>We manage what we build for the first five years — so quality stays our problem, not yours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PROCESS ============ -->
+<section id="process">
+  <div class="container">
+    <div class="section-head reveal">
+      <div>
+        <div class="eyebrow dark">How a Project Ships</div>
+        <h2>From survey pin to front-door key.</h2>
+      </div>
+      <p class="desc">The same four-stage sequence runs on every Meridian project, regardless of scale.</p>
+    </div>
+    <div class="process-list">
+      <div class="process-item reveal">
+        <div class="idx">01 / Survey</div>
+        <h4>Land &amp; Feasibility</h4>
+        <p>Topographic survey, soil testing and market feasibility, typically 6–10 weeks before design begins.</p>
+      </div>
+      <div class="process-item reveal">
+        <div class="idx">02 / Design</div>
+        <h4>Master Planning</h4>
+        <p>Architecture, structural engineering and MEP design finalized and permitted before the first excavation.</p>
+      </div>
+      <div class="process-item reveal">
+        <div class="idx">03 / Build</div>
+        <h4>Construction</h4>
+        <p>Quarterly third-party inspections published to buyers throughout the build cycle.</p>
+      </div>
+      <div class="process-item reveal">
+        <div class="idx">04 / Deliver</div>
+        <h4>Handover</h4>
+        <p>Unit inspection walkthrough with the buyer, snag-list resolution, then keys — on the contracted date.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section class="testimonial-section" id="testimonials">
+  <div class="container">
+    <div class="testimonial-wrap reveal">
+      <div class="testimonial-slide active">
+        <blockquote>"We tracked the build through their quarterly inspection reports before we ever saw the unit in person. It handed over three days early."</blockquote>
+        <div class="author">— Hana Farouk, Meridian Bay Residences</div>
+      </div>
+      <div class="testimonial-slide">
+        <blockquote>"The payment plan was rebuilt around our actual income timeline, not a generic 10% / 90-month template. That flexibility is rare here."</blockquote>
+        <div class="author">— Omar El-Sayed, The Grove Villas</div>
+      </div>
+      <div class="testimonial-slide">
+        <blockquote>"Our retail unit at Horizon Business Park opened on the exact date in the contract — no extensions, no excuses."</blockquote>
+        <div class="author">— Lara Michel, Horizon Business Park</div>
+      </div>
+      <div class="testimonial-controls">
+        <button class="t-arrow" id="tPrev" aria-label="Previous testimonial"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M12 4 6 10l6 6" stroke="#16211D" stroke-width="1.6" fill="none"/></svg></button>
+        <button class="t-dot active" data-idx="0"></button>
+        <button class="t-dot" data-idx="1"></button>
+        <button class="t-dot" data-idx="2"></button>
+        <button class="t-arrow" id="tNext" aria-label="Next testimonial"><svg width="14" height="14" viewBox="0 0 20 20"><path d="M8 4l6 6-6 6" stroke="#16211D" stroke-width="1.6" fill="none"/></svg></button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <div class="eyebrow">Get In Touch</div>
+        <h2>Request a consultation with a sales engineer, not a script reader.</h2>
+        <p class="lede">Tell us what you're looking for and someone from the actual project team will get back to you within one business day.</p>
+        <div class="contact-detail">
+          <div>
+            <div class="lbl">Sales Office</div>
+            <div class="val">90th Street, New Cairo, Egypt</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div>
+            <div class="lbl">Phone</div>
+            <div class="val">+20 2 2758 4400</div>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div>
+            <div class="lbl">Email</div>
+            <div class="val">sales@meridian-demo.example</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <form id="contactForm" novalidate>
+          <div class="form-grid">
+            <div class="form-field">
+              <label for="cName">Full Name</label>
+              <input type="text" id="cName" placeholder="e.g. Ahmed Youssef">
+              <div class="form-error" id="errName"></div>
+            </div>
+            <div class="form-field">
+              <label for="cPhone">Phone Number</label>
+              <input type="tel" id="cPhone" placeholder="e.g. 010 000 0000">
+              <div class="form-error" id="errPhone"></div>
+            </div>
+            <div class="form-field full">
+              <label for="cEmail">Email Address</label>
+              <input type="email" id="cEmail" placeholder="e.g. you@email.com">
+              <div class="form-error" id="errEmail"></div>
+            </div>
+            <div class="form-field full">
+              <label for="cInterest">Interested Project</label>
+              <select id="cInterest">
+                <option value="">Not sure yet — recommend one</option>
+              </select>
+            </div>
+            <div class="form-field full">
+              <label for="cMsg">Message (optional)</label>
+              <textarea id="cMsg" placeholder="Number of bedrooms, budget range, move-in timeline..."></textarea>
+            </div>
+          </div>
+          <button type="submit" class="form-submit" id="submitBtn">
+            Send Request
+            <svg width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M4 10h12M11 5l5 5-5 5" stroke="#0A2825" stroke-width="1.6"/></svg>
+          </button>
+        </form>
+        <div class="form-success" id="formSuccess">
+          <svg class="check" width="46" height="46" viewBox="0 0 46 46" fill="none"><circle cx="23" cy="23" r="21" stroke="#C6A15B" stroke-width="1.3"/><path d="M14 23l6 6 12-13" stroke="#C6A15B" stroke-width="1.6"/></svg>
+          <h4>Request received</h4>
+          <p>A Meridian sales engineer will reach out within one business day. Reference ID: <span id="refId"></span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="container">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <div class="nav-logo">
+          <svg width="26" height="26" viewBox="0 0 30 30" fill="none"><circle cx="15" cy="15" r="13.5" stroke="#C6A15B" stroke-width="1"/><path d="M15 4 L18 15 L15 26 L12 15 Z" fill="#C6A15B"/></svg>
+          MERIDIAN
+        </div>
+        <p>A real estate development studio building waterfront residences, villa compounds and business districts across four cities.</p>
+      </div>
+      <div class="footer-col">
+        <h5>Navigate</h5>
+        <a href="#projects">Projects</a>
+        <a href="#why">Why Us</a>
+        <a href="#process">Process</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="footer-col">
+        <h5>Company</h5>
+        <a href="#">Careers</a>
+        <a href="#">Press</a>
+        <a href="#">Investor Relations</a>
+        <a href="#">Legal</a>
+      </div>
+      <div class="footer-col">
+        <h5>Stay Updated</h5>
+        <form id="newsletterForm">
+          <div class="newsletter">
+            <input type="email" id="newsEmail" placeholder="Email address" required>
+            <button type="submit">Join</button>
+          </div>
+        </form>
+        <div class="newsletter-msg" id="newsMsg"></div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>© 2026 Meridian Developments — Demo site for portfolio purposes.</div>
+      <div class="socials">
+        <a href="#">Instagram</a>
+        <a href="#">LinkedIn</a>
+        <a href="#">Facebook</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" id="modalContent"></div>
+</div>
+
+<button class="to-top" id="toTop" aria-label="Back to top">
+  <svg width="16" height="16" viewBox="0 0 20 20" fill="none"><path d="M10 15V5M5 10l5-5 5 5" stroke="#FBF8F3" stroke-width="1.6"/></svg>
+</button>
+
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============ DATA ============ */
+const PROJECTS = [
+  {
+    id:"bay-residences", cat:"residential", tag:"Now Selling", city:"North Coast",
+    name:"Meridian Bay Residences", price:"7.4M EGP",
+    desc:"Waterfront apartments with private beach access and a 400m marina promenade.",
+    color1:"#1B5C54", color2:"#0E3733",
+    beds:"1–3", size:"95–210", units:"312", handover:"Q4 2027",
+    amenities:["Private Beach","Marina Walk","Kids Club","Co-working Lounge","24/7 Security","EV Charging"],
+    lede:"A low-rise waterfront release on the North Coast, built around a 400-meter marina promenade with direct beach access from the ground-floor units."
+  },
+  {
+    id:"grove-villas", cat:"villa", tag:"Last 12 Units", city:"New Capital",
+    name:"The Grove Villas", price:"14.9M EGP",
+    desc:"Standalone villas set around a central landscaped park with private gardens.",
+    color1:"#8B6A34", color2:"#C6A15B",
+    beds:"4–5", size:"340–420", units:"86", handover:"Q2 2027",
+    amenities:["Private Garden","Central Park","Clubhouse","Jogging Track","Smart Home","Gated Community"],
+    lede:"86 standalone villas arranged around a 12-acre central park, each with a private garden and direct pedestrian access to the clubhouse."
+  },
+  {
+    id:"skyline-tower", cat:"commercial", tag:"Pre-Launch", city:"Cairo",
+    name:"Skyline Tower", price:"From 4.2M EGP",
+    desc:"A 28-floor mixed-use tower with grade-A offices and ground-floor retail.",
+    color1:"#134A44", color2:"#1B5C54",
+    beds:"Office / Retail", size:"45–260", units:"210", handover:"Q1 2028",
+    amenities:["Grade-A Offices","Retail Podium","Sky Lounge","Valet Parking","Fiber Connectivity","Conference Center"],
+    lede:"A 28-floor mixed-use tower in downtown Cairo pairing grade-A office floors with a three-level retail podium and rooftop sky lounge."
+  },
+  {
+    id:"palm-terrace", cat:"residential", tag:"Now Selling", city:"Sokhna",
+    name:"Palm Terrace", price:"5.8M EGP",
+    desc:"Terraced apartments stepping down toward the shoreline with panoramic sea views.",
+    color1:"#0E3733", color2:"#C6A15B",
+    beds:"2–3", size:"110–165", units:"180", handover:"Q3 2026",
+    amenities:["Sea View","Terraced Layout","Infinity Pool","Beach Club","Concierge","Bicycle Paths"],
+    lede:"180 terraced units in Ain Sokhna that step down toward the shoreline, giving every floor an unobstructed sea view from the living room."
+  },
+  {
+    id:"harbor-townhomes", cat:"villa", tag:"Now Selling", city:"North Coast",
+    name:"Harbor Townhomes", price:"9.1M EGP",
+    desc:"Three-storey townhomes along a pedestrian harbor lined with cafes and shops.",
+    color1:"#5C4326", color2:"#E3C88B",
+    beds:"3–4", size:"210–260", units:"64", handover:"Q4 2026",
+    amenities:["Roof Terrace","Harbor Walk","Private Garage","Storage Room","Shared Pool","Retail Strip"],
+    lede:"64 three-storey townhomes lining a pedestrian harbor promenade, each with a private roof terrace and direct garage access."
+  },
+  {
+    id:"horizon-business-park", cat:"commercial", tag:"Now Leasing", city:"New Capital",
+    name:"Horizon Business Park", price:"From 6.5M EGP",
+    desc:"A low-density business park of five office buildings around a shared courtyard.",
+    color1:"#1B5C54", color2:"#134A44",
+    beds:"Office", size:"120–800", units:"48", handover:"Delivered",
+    amenities:["Shared Courtyard","Cafeteria","EV Charging","Loading Docks","Fiber Connectivity","Ample Parking"],
+    lede:"Five low-rise office buildings arranged around a shared landscaped courtyard, already delivered and operating at 82% occupancy."
+  }
+];
+
+/* ============ NAV SCROLL STATE ============ */
+const nav = document.getElementById('nav');
+const toTop = document.getElementById('toTop');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  nav.classList.toggle('scrolled', y > 60);
+  toTop.classList.toggle('show', y > 700);
+});
+
+/* ============ MOBILE MENU ============ */
+const navToggle = document.getElementById('navToggle');
+const mobileMenu = document.getElementById('mobileMenu');
+navToggle.addEventListener('click', () => {
+  navToggle.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+document.querySelectorAll('.m-link').forEach(l => l.addEventListener('click', () => {
+  navToggle.classList.remove('open');
+  mobileMenu.classList.remove('open');
+}));
+
+/* ============ REVEAL ON SCROLL ============ */
+const revealEls = document.querySelectorAll('.reveal');
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.15 });
+revealEls.forEach(el => revealObserver.observe(el));
+
+/* ============ COUNTER ANIMATION ============ */
+function formatNum(n){
+  if (n >= 1000000) return (n/1000000).toFixed(1).replace(/\.0$/,'') + 'M';
+  return n.toLocaleString('en-US');
+}
+const counters = document.querySelectorAll('.stat .num');
+const counterObserver = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (!entry.isIntersecting) return;
+    const el = entry.target;
+    const target = parseInt(el.dataset.count, 10);
+    const suffix = el.dataset.suffix || '';
+    let start = null;
+    const duration = 1400;
+    function step(ts){
+      if (!start) start = ts;
+      const progress = Math.min((ts - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      el.textContent = formatNum(Math.floor(target * eased)) + suffix;
+      if (progress < 1) requestAnimationFrame(step);
+      else el.textContent = formatNum(target) + suffix;
+    }
+    requestAnimationFrame(step);
+    counterObserver.unobserve(el);
+  });
+}, { threshold: 0.5 });
+counters.forEach(c => counterObserver.observe(c));
+
+/* ============ RENDER PROJECT CARDS ============ */
+const grid = document.getElementById('projectGrid');
+const interestSelect = document.getElementById('cInterest');
+
+function artSVG(c1, c2){
+  return `<svg class="art" width="100%" height="100%" viewBox="0 0 400 220" preserveAspectRatio="xMidYMid slice">
+    <defs><linearGradient id="g-${c1.replace('#','')}" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="${c1}"/><stop offset="100%" stop-color="${c2}"/>
+    </linearGradient></defs>
+    <rect width="400" height="220" fill="url(#g-${c1.replace('#','')})"/>
+    <g opacity="0.25" stroke="#FBF8F3" stroke-width="0.6">
+      <line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="120" x2="400" y2="120"/><line x1="0" y1="180" x2="400" y2="180"/>
+      <line x1="100" y1="0" x2="100" y2="220"/><line x1="200" y1="0" x2="200" y2="220"/><line x1="300" y1="0" x2="300" y2="220"/>
+    </g>
+    <path d="M60 180 L60 110 L110 80 L160 110 L160 180 Z" fill="#FBF8F3" opacity="0.14"/>
+    <path d="M220 180 L220 90 L280 60 L340 90 L340 180 Z" fill="#FBF8F3" opacity="0.2"/>
+  </svg>`;
+}
+
+function renderProjects(filter){
+  grid.innerHTML = '';
+  const list = filter === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === filter);
+  list.forEach((p, i) => {
+    const card = document.createElement('div');
+    card.className = 'project-card reveal';
+    card.innerHTML = `
+      <div class="project-media">
+        <span class="tag">${p.tag}</span>
+        ${artSVG(p.color1, p.color2)}
+      </div>
+      <div class="project-body">
+        <div class="loc">📍 ${p.city}</div>
+        <h3>${p.name}</h3>
+        <p class="desc">${p.desc}</p>
+        <div class="project-foot">
+          <div class="price">${p.price}</div>
+          <div class="view">View Project →</div>
+        </div>
+      </div>`;
+    card.addEventListener('click', () => openModal(p.id));
+    grid.appendChild(card);
+    revealObserver.observe(card);
+    requestAnimationFrame(() => setTimeout(() => card.classList.add('in'), i * 40));
+  });
+}
+renderProjects('all');
+
+PROJECTS.forEach(p => {
+  const opt = document.createElement('option');
+  opt.value = p.id; opt.textContent = p.name;
+  interestSelect.appendChild(opt);
+});
+
+/* ============ FILTERS ============ */
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    renderProjects(btn.dataset.filter);
+  });
+});
+
+/* ============ HERO SEARCH -> FILTERS PROJECTS ============ */
+document.getElementById('searchForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const type = document.getElementById('fType').value;
+  const city = document.getElementById('fCity').value;
+  const budget = document.getElementById('fBudget').value;
+
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  const match = document.querySelector(`.filter-btn[data-filter="${type}"]`) || document.querySelector('.filter-btn[data-filter="all"]');
+  match.classList.add('active');
+
+  let list = type === 'all' ? PROJECTS : PROJECTS.filter(p => p.cat === type);
+  if (city !== 'all') list = list.filter(p => p.city === city);
+  if (budget !== 'all'){
+    list = list.filter(p => {
+      const num = parseFloat(p.price.replace(/[^\d.]/g, ''));
+      if (budget === 'low') return num < 6;
+      if (budget === 'mid') return num >= 6 && num <= 15;
+      if (budget === 'high') return num > 15;
+      return true;
+    });
+  }
+
+  grid.innerHTML = '';
+  if (list.length === 0){
+    grid.innerHTML = `<p style="grid-column:1/-1; color:var(--stone); padding:30px 0;">No live projects match that combination yet — try widening your search, or send us your criteria via the contact form and we'll flag you when one opens.</p>`;
+  } else {
+    list.forEach((p, i) => {
+      const card = document.createElement('div');
+      card.className = 'project-card reveal in';
+      card.innerHTML = `
+        <div class="project-media"><span class="tag">${p.tag}</span>${artSVG(p.color1, p.color2)}</div>
+        <div class="project-body">
+          <div class="loc">📍 ${p.city}</div>
+          <h3>${p.name}</h3>
+          <p class="desc">${p.desc}</p>
+          <div class="project-foot"><div class="price">${p.price}</div><div class="view">View Project →</div></div>
+        </div>`;
+      card.addEventListener('click', () => openModal(p.id));
+      grid.appendChild(card);
+    });
+  }
+  document.getElementById('projects').scrollIntoView({ behavior: 'smooth' });
+  showToast(`Found ${list.length} propert${list.length === 1 ? 'y' : 'ies'} matching your search.`);
+});
+
+/* ============ MODAL ============ */
+const modalOverlay = document.getElementById('modalOverlay');
+const modalContent = document.getElementById('modalContent');
+
+function openModal(id){
+  const p = PROJECTS.find(x => x.id === id);
+  if (!p) return;
+  modalContent.innerHTML = `
+    <button class="modal-close" id="modalClose">✕</button>
+    <div class="modal-hero">${artSVG(p.color1, p.color2)}</div>
+    <div class="modal-body">
+      <div class="loc">📍 ${p.city} — ${p.tag}</div>
+      <h3>${p.name}</h3>
+      <p class="lede">${p.lede}</p>
+      <div class="modal-specs">
+        <div class="spec"><div class="num">${p.beds}</div><div class="lbl">Bedrooms</div></div>
+        <div class="spec"><div class="num">${p.size}</div><div class="lbl">Sq. Meters</div></div>
+        <div class="spec"><div class="num">${p.units}</div><div class="lbl">Total Units</div></div>
+        <div class="spec"><div class="num">${p.handover}</div><div class="lbl">Handover</div></div>
+      </div>
+      <div class="modal-amenities">${p.amenities.map(a => `<span>${a}</span>`).join('')}</div>
+      <div class="modal-cta">
+        <button class="btn-primary" id="modalRequest">Request Details for ${p.name}</button>
+        <button class="btn-ghost" id="modalDl">Download Brochure (Demo)</button>
+      </div>
+    </div>`;
+  modalOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+
+  document.getElementById('modalClose').addEventListener('click', closeModal);
+  document.getElementById('modalRequest').addEventListener('click', () => {
+    closeModal();
+    document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+    interestSelect.value = p.id;
+  });
+  document.getElementById('modalDl').addEventListener('click', () => {
+    showToast('This is a demo — brochure download would trigger here in production.');
+  });
+}
+function closeModal(){
+  modalOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+}
+modalOverlay.addEventListener('click', (e) => { if (e.target === modalOverlay) closeModal(); });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeModal(); });
+
+/* ============ TESTIMONIAL CAROUSEL ============ */
+const slides = document.querySelectorAll('.testimonial-slide');
+const dots = document.querySelectorAll('.t-dot');
+let tIndex = 0, tTimer;
+function showSlide(i){
+  slides.forEach(s => s.classList.remove('active'));
+  dots.forEach(d => d.classList.remove('active'));
+  tIndex = (i + slides.length) % slides.length;
+  slides[tIndex].classList.add('active');
+  dots[tIndex].classList.add('active');
+}
+document.getElementById('tPrev').addEventListener('click', () => { showSlide(tIndex - 1); resetTimer(); });
+document.getElementById('tNext').addEventListener('click', () => { showSlide(tIndex + 1); resetTimer(); });
+dots.forEach(d => d.addEventListener('click', () => { showSlide(parseInt(d.dataset.idx)); resetTimer(); }));
+function resetTimer(){ clearInterval(tTimer); tTimer = setInterval(() => showSlide(tIndex + 1), 6000); }
+resetTimer();
+
+/* ============ TOAST ============ */
+let toastTimer;
+function showToast(msg){
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), 3800);
+}
+
+/* ============ CONTACT FORM VALIDATION ============ */
+const contactForm = document.getElementById('contactForm');
+const submitBtn = document.getElementById('submitBtn');
+contactForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  let valid = true;
+  const name = document.getElementById('cName');
+  const phone = document.getElementById('cPhone');
+  const email = document.getElementById('cEmail');
+  const errName = document.getElementById('errName');
+  const errPhone = document.getElementById('errPhone');
+  const errEmail = document.getElementById('errEmail');
+  errName.textContent = ''; errPhone.textContent = ''; errEmail.textContent = '';
+
+  if (name.value.trim().length < 2){ errName.textContent = 'Please enter your full name.'; valid = false; }
+  const phoneDigits = phone.value.replace(/\D/g, '');
+  if (phoneDigits.length < 9){ errPhone.textContent = 'Please enter a valid phone number.'; valid = false; }
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(email.value.trim())){ errEmail.textContent = 'Please enter a valid email address.'; valid = false; }
+
+  if (!valid) return;
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Sending…';
+  setTimeout(() => {
+    contactForm.style.display = 'none';
+    document.getElementById('refId').textContent = 'MR-' + Math.floor(100000 + Math.random() * 900000);
+    document.getElementById('formSuccess').classList.add('show');
+    showToast('Your request has been received.');
+  }, 900);
+});
+
+/* ============ NEWSLETTER ============ */
+document.getElementById('newsletterForm').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const input = document.getElementById('newsEmail');
+  const msg = document.getElementById('newsMsg');
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  if (!emailRe.test(input.value.trim())){
+    msg.style.color = '#D9694A';
+    msg.textContent = 'Enter a valid email to subscribe.';
+    return;
+  }
+  msg.style.color = 'var(--gold-light)';
+  msg.textContent = 'Subscribed — welcome to the list.';
+  input.value = '';
+});
+
+/* ============ BACK TO TOP ============ */
+toTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+</script>
+</body>
+</html>
